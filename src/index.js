@@ -1,7 +1,14 @@
 const express = require("express")
 
+const cors = require("cors")
+const router = require("./route/productRoute")
+
 const app = express()
 const port = 3030
+app.use(express.json())
+
+//Cors
+app.use(cors())
 
 
 const products = [
@@ -72,14 +79,18 @@ app.get("/products", (req, res)=>{
 
 app.post("/products/create",(req, res)=>{
   
-    // try {
-    //      console.log(req.body);
-    // } catch (error) {
-    //     return res.status(404).json(error.message)
-        
-    // }
-})
+    try {
+        const email  = req.body.email
+        const password = req.body.password
 
+        return res.status(201).json({email,password})
+        //  console.log(req.body);
+    } catch (error) {
+        return res.status(404).json(error.message)
+        
+    }
+})
+app.use(router)
 app.listen(port, ()=>{
     console.log(`Serev er dey run for this port ${port}`);
 } )
